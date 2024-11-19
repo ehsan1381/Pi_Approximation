@@ -4,12 +4,12 @@
 
 
 
-function [ number ] = SterlingNumberOfFirstKind(n, k)
+function [ number ] = SterlingNumberOfFirstKind(n, k, NumArray)
     
-    global NumArray;
+    
 
     if size(NumArray) == [1, 1]
-        NumArray = zeros(n+1);
+        NumArray = zeros(n);
     end
 
     if n==0 && k~=0
@@ -24,16 +24,16 @@ function [ number ] = SterlingNumberOfFirstKind(n, k)
         number = 1;
     
     
-    elseif NumArray(n+1, k+1) ~= 0
+    elseif NumArray(n, k) ~= 0
         number = NumArray(n, k);
   
     else
-        number = n * SterlingNumberOfFirstKind( n - 1, k) + SterlingNumberOfFirstKind( n - 1, k - 1);
+        number = n * SterlingNumberOfFirstKind( n - 1, k , NumArray) + SterlingNumberOfFirstKind( n - 1, k - 1 , NumArray);
     end % if n==0 && k~=0
     
-        NumArray(n+1, k+1) = number;
+        NumArray(n, k) = number;
         return
-
+    end % NumArray(n, k) ~= 0
 
 
 
