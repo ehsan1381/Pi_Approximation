@@ -1,38 +1,23 @@
 % This function computes sterling numbers of the first kind
-% - [ ] Memoize this function to improve performance
 
 
 
 
 function [ number ] = SterlingNumberOfFirstKind(n, k)
     
-    global NumArray;
 
-    if size(NumArray) == [1, 1]
-        NumArray = zeros(n+1);
-    end
-
+    % check for base values
     if n==0 && k~=0
         number = 0;
-        
-         
     elseif n~=0 && k==0
         number = 0;
-        
-    
     elseif n==0 && k==0
         number = 1;
-    
-    
-    elseif NumArray(n+1, k+1) ~= 0
-        number = NumArray(n, k);
-  
     else
         number = n * SterlingNumberOfFirstKind( n - 1, k) + SterlingNumberOfFirstKind( n - 1, k - 1);
     end % if n==0 && k~=0
     
-        NumArray(n+1, k+1) = number;
-        return
+    return
 
 
 
