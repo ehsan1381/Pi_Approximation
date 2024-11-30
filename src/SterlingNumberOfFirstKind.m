@@ -4,19 +4,17 @@
 
 
 function [ number ] = SterlingNumberOfFirstKind(n, k)
-    
+    number = 0;
 
     % check for base values
-    if n==0 && k~=0
-        number = 0;
-    elseif n~=0 && k==0
-        number = 0;
-    elseif n==0 && k==0
+    if n==k
         number = 1;
+    elseif (n==0 && k~=0) || (n~=0 && k==0)
+        number = 0;
     else
-        number = n * SterlingNumberOfFirstKind( n - 1, k) + SterlingNumberOfFirstKind( n - 1, k - 1);
+        number = (n-1) * SterlingNumberOfFirstKind( n - 1, k) + SterlingNumberOfFirstKind( n - 1, k - 1);
     end % if n==0 && k~=0
-    
+
     return
 
 
