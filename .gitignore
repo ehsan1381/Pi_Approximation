@@ -2,7 +2,7 @@
 *.asv
 
 # ignore matlab pcode files
-*.p
+# *.p
 
 
 
