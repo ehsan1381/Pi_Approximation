@@ -3,8 +3,11 @@
 
 
 % global variables and program settings
-LAMBDA = 1
-N_TERMS = 10
+% LAMBDA = input("Enter value for lambda: ")
+% N_TERMS = input("Enter number of terms: ")
+% LAMBDA = 1
+% N_TERMS = 10
+
 ARR_TERMS = zeros([1, N_TERMS]);
 % ARR_TERMS = zeros([1, N_TERMS + 1]);
 % ARR_TERMS(1) = 4;
