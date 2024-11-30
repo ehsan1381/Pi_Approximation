@@ -1,13 +1,26 @@
+# Idea
+A few months ago I came across a paper on topic of string theory. The
+researcheers accidentally found a new way of approximating pi in their work. The
+method is interesting to me for two reasons. First it contains a lambda
+parameter which when its limit is take to infinity, the series will converge to
+Medhava seres. Possibly the worse method of approximating pi. Because the
+approximation error is a function of this lambda, I want to find optimal
+value/values for this parameter. Second is that the series contains every
+headache for numerical analysis work. Large numbers, small numbers, possibility
+for overflow and underflow, rounding errors, etc. . I want to use this as a
+practice problem both for programming and the theoretical side of things.
 
-# Completing a first version
-- [x] OneOverFactorial
-- [ ] Pochhammer symbol
-    - [x] Computing sterling numbers of the first kind
-	Done in SterlingNumberOfFirstKind.m
-    - [ ] Generating and evaluating polynomial
-	Program takes `n` and `x` as input and computes the Pochhammer part of the term $n$.
-    - [ ] Computing input to Pochhammer symbol
-- [ ] Computing Y. 
-    The parenthesis after $\frac{1}{\factorial{n}}$
-- [ ] Function to store the values in a bin file
-- [ ] Main file to execute the program
+
+# Roadmap
+First step is to prepare simple working version of the program in MATLAB. The
+modify it to make it a robust code. Optimize the algorithms wherever possible.
+
+The second step is to translate that final code to C and again optimize for
+performance and precision.
+
+In the third step I will add ability to use 128bit floats in the C program
+
+And lastly will modify the program to run in parallel.
+
+As I said this is mostly an exercise. I want to expand on it as much as I can.
+
