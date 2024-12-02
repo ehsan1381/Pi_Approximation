@@ -3,7 +3,7 @@
 
 
 
-function [ number ] = SterlingNumberOfFirstKind(n, k)
+function [ number ] = StirlingNumberOfFirstKind(n, k)
     number = 0;
 
     % check for base values
@@ -12,7 +12,7 @@ function [ number ] = SterlingNumberOfFirstKind(n, k)
     elseif (n==0 && k~=0) || (n~=0 && k==0)
         number = 0;
     else
-        number = (n-1) * SterlingNumberOfFirstKind( n - 1, k) + SterlingNumberOfFirstKind( n - 1, k - 1);
+        number = (n-1) * StirlingNumberOfFirstKind( n - 1, k) + StirlingNumberOfFirstKind( n - 1, k - 1);
     end % if n==0 && k~=0
 
     return
