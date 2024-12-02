@@ -7,8 +7,12 @@ function [ number ] = StirlingNumberOfFirstKind(n, k)
     number = 0;
 
     % check for base values
-    if n==k
+    if n == k
         number = 1;
+    elseif n == k - 1
+        number = 0.5*n*(n+1);
+    elseif k == 1
+        number = factorial(n-1);
     elseif (n==0 && k~=0) || (n~=0 && k==0)
         number = 0;
     else
