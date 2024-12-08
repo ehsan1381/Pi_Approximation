@@ -1,4 +1,4 @@
-function [ X_n ] = Pochhammer( input_x ,input_n )
+function [ poly_handle ] = Pochhammer( input_n )
   % Compute the pochhammer polynomial for given inputs x and n
   %   Usage : Pochhammer(x, n)
   %       x is of type double and n is integer value (not necessarily of integer type)
@@ -6,7 +6,7 @@ function [ X_n ] = Pochhammer( input_x ,input_n )
 
 
   arguments
-    input_x (1, 1) double
+%    input_x (1, 1) double
     input_n (1, 1) double
   end
 
@@ -14,9 +14,9 @@ function [ X_n ] = Pochhammer( input_x ,input_n )
   polynomial = zeros([1, input_n+1]);
 
   for i=[1:input_n]
-    polynomial(i) = SterlingNumberOfFirstKind(input_n, i);
+    polynomial(i) = StirlingNumberOfFirstKind(input_n, i);
   end % for
 
-  X_n = polyval(polynomial, input_x);
-
+  % poly_handle = @(input_x)(polyval(polynomial, input_x));
+  poly_handle = polynomial;
 end % function

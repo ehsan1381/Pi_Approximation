@@ -5,7 +5,7 @@
 % global variables and program settings
 % LAMBDA = input("Enter value for lambda: ")
 % N_TERMS = input("Enter number of terms: ")
-% LAMBDA = 1
+% LAMBDA = 2.4
 % N_TERMS = 10
 
 ARR_TERMS = zeros([1, N_TERMS]);
@@ -23,7 +23,8 @@ for i=[1:N_TERMS]
   FirstParenthesisVal = FirstParenthesis(LAMBDA, i);
   SecondParenthesisVal = SecondParenthesis(LAMBDA, i);
 
-  PochhammerVal = Pochhammer(SecondParenthesisVal, i);
+  polynom = Pochhammer( i );
+  PochhammerVal = polyval(polynom, SecondParenthesisVal);
 
   Product = FACT * FirstParenthesisVal * PochhammerVal;
   ARR_TERMS(i) = Product;
