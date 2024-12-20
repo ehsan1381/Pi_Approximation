@@ -14,7 +14,7 @@ function [ poly_handle ] = Pochhammer( input_n )
   polynomial = zeros([1, input_n+1]);
 
   for i=[1:input_n]
-    polynomial(i) = StirlingNumberOfFirstKind(input_n, i);
+    polynomial(input_n + 1 - i) = StirlingNumberOfFirstKind(input_n, i);
   end % for
 
   % poly_handle = @(input_x)(polyval(polynomial, input_x));
