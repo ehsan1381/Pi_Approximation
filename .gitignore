@@ -1,8 +1,0 @@
-# ignore matlab autosave files
-*.asv
-
-# ignore matlab pcode files
-# *.p
-
-
-

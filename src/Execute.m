@@ -11,8 +11,7 @@ function [ PI_APPROX ] = Execute(LAMBDA, N_TERMS, Polynomials, Factorials)
     FirstParenthesisVal = FirstParenthesis(LAMBDA, i);
     SecondParenthesisVal = SecondParenthesis(LAMBDA, i);
 
-    % polynom = Pochhammer( i );
-    polynom = Polynomials(i, 1:i+1);
+    polynom = Polynomials(i, :);
     PochhammerVal = polyval(polynom, SecondParenthesisVal);
 
     Product = FACT * FirstParenthesisVal * PochhammerVal;
