@@ -20,7 +20,7 @@ ApproxArr = zeros([LArrSize, 1]);
 for i = 1:LArrSize
   lambda = LambdaArr(i);
   Approx = MainHandle(lambda);
-  ErrorArr(i) = pi-Approx;
+  ErrorArr(i) = Approx - pi;
   ApproxArr(i) = Approx;
 end
 toc;
