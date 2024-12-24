@@ -38,13 +38,41 @@ def StirlingNumberOfFirstKind(n, k):
     return number
 
 def Pochhammer(input_n):
-    polynomial = np.zeros([1, input_n + 1])
+    polynomial = np.zeros(input_n + 1)
 
     for i in range(1, input_n+1):
         polynomial[input_n + 1 - i] = StirlingNumberOfFirstKind(input_n, i)
 
     poly_handle = Polynomial(polynomial)
     return poly_handle
+
+
+def FacorialArray(num):
+    FactArr = np.zeros(num)
+
+    for i in range(1, num + 1):
+        val = OneOverFactorial(i)
+        FactArr[i] = val
+
+    return FactArr
+
+def PolynomialArray(num):
+    Array = np.zeros([num + 1, num + 1])
+    Array[1, num+1] = 1
+
+    for i in range(1, num + 1):
+        poly = Pochhammer(i)
+        Array[i+1][num - i+1:num+1] = poly
+
+
+def Execute(Lambda, NTerms, Polynomials, Factorials):
+
+
+
+
+
+
+
 
 
 
