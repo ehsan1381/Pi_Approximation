@@ -12,14 +12,14 @@ Polys = PolynomialArray(Nterms);
 Facts = FactorialArray(Nterms);
 
 % for ease of use
-MainHandle = @(lambda)(Execute(lambda, Nterms, Polys, Facts));
+ExecuteHandle = @(lambda)(Execute(lambda, Nterms, Polys, Facts));
 
 ErrorArr = zeros([LArrSize, 1]);
 ApproxArr = zeros([LArrSize, 1]);
 
 for i = 1:LArrSize
   lambda = LambdaArr(i);
-  Approx = MainHandle(lambda);
+  Approx = ExecuteHandle(lambda);
   ErrorArr(i) = Approx - pi;
   ApproxArr(i) = Approx;
 end
