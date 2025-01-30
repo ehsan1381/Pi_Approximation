@@ -66,8 +66,19 @@ def PolynomialArray(num):
 
 
 def Execute(Lambda, NTerms, Polynomials, Factorials):
+    def FirstParenthesis(lambda, n):
+        return 1 / (n + lambda) - 4 / (2 * n + 1)
 
+    def SecondParenthesis(lambda, n):
+        return (2 * n + 1) ** 2 / (4*(n + lambda)) - n
 
+    for i in range(1, NTerms+1):
+        FACT = Factorials[i]
+        FirstParenthesisVal = FirstParenthesis(Lambda, i)
+        SecondParenthesisVal = SecondParenthesis(Lambda, i)
+
+        polynom = Polynomials[i]
+        PochhammerVal =
 
 
 
