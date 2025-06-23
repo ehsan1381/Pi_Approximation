@@ -1,109 +1,96 @@
-# This script computes an approximation of π using a series expansion
-# based on the Pochhammer symbol and Stirling numbers of the first kind.   
-# It includes optimizations for factorial calculations, caching for Stirling numbers,
-# and term-by-term monitoring to ensure convergence.
-#TODO : first make a working version, then optimize it
-#then add tests
-#TODO : analyse each function and its performance
-#TODO : add docstrings and comments for clarity
+# This script calculates the Pochhammer symbol and Stirling numbers of the first kind.
+# It also computes the factorial of numbers and prepares polynomial arrays.
 
 import numpy as np
 import sys
 import math
 from functools import lru_cache
 
-# Safe factorial calculation
-def OneOverFactorial(n):
-    if n > 170:
-        return 0.0  # Beyond float precision
+def OneOverFactorial(num):
+    """
+    Calculates the value of 1 divided by the factorial of a given number.
+    """
+    if num > 170:  # Reduced from 177 for better numerical stability
+        print("Error: Input is too large to calculate 1/n! within float precision")
+        sys.exit()
+
     result = 1.0
-    for i in range(1, n+1):
+    for i in range(1, num + 1):
         result /= i
     return result
 
-# Stirling numbers with caching
 @lru_cache(maxsize=None)
-def Stirling(n, k):
-    if n == k: return 1
-    if k == 0 or n == 0: return 0
-    return (n-1)*Stirling(n-1, k) + Stirling(n-1, k-1)
+def StirlingNumberOfFirstKind(n, k):
+    """
+    Calculate the unsigned Stirling number of the first kind, c(n, k).
+    Uses memoization for efficiency.
+    """
+    if n == k:
+        return 1
+    if k == 0 or n == 0:
+        return 0
+    return (n - 1) * StirlingNumberOfFirstKind(n - 1, k) + StirlingNumberOfFirstKind(n - 1, k - 1)
 
-# Direct rising factorial calculation
 def RisingFactorial(x, n):
+    """
+    Directly computes the rising factorial (Pochhammer symbol) (x)_n
+    """
     result = 1.0
     for i in range(n):
         result *= (x + i)
     return result
 
-# Main computation with term monitoring
-def compute_pi(Lambda, max_n):
+def FactorialArray(num):
     """
-    Computes π approximation with term-by-term monitoring
-    Returns: (approximation, term_details)
+    Precomputes 1/n! for n=1 to num
     """
-    pi_approx = 4.0
-    terms = []
-    
-    for n in range(1, max_n+1):
-        # Compute components
-        inv_fact = OneOverFactorial(n)
-        term1 = 1/(n + Lambda) - 4/(2*n + 1)
-        a_n = (2*n + 1)**2/(4*(n + Lambda)) - n
-        poch = RisingFactorial(a_n, n)
-        
-        # Full term
-        term_val = inv_fact * term1 * poch
-        pi_approx += term_val
-        
-        # Store term details
-        terms.append({
-            'n': n,
-            'inv_fact': inv_fact,
-            'term1': term1,
-            'a_n': a_n,
-            'poch': poch,
-            'term_val': term_val,
-            'current_pi': pi_approx
-        })
-        
-        # Stop when terms become negligible
-        if abs(term_val) < 1e-16 * abs(pi_approx):
-            break
-    
-    return pi_approx, terms
+    arr = np.zeros(num)
+    for i in range(num):
+        arr[i] = OneOverFactorial(i + 1)
+    return arr
 
-# Verification and analysis
-def verify_convergence():
-    results = {}
-    for lam in [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
-        pi_approx, terms = compute_pi(lam, 30)
-        error = abs(pi_approx - math.pi)
-        results[lam] = {
-            'approximation': pi_approx,
-            'error': error,
-            'terms': terms,
-            'effective_terms': len(terms)
-        }
-        
-        print(f"λ={lam}:")
-        print(f"  Approx = {pi_approx:.16f}")
-        print(f"  Error   = {error:.2e}")
-        print(f"  Terms   = {len(terms)}")
-        
-        # Show term progression
-        print("  Last 3 terms:")
-        for t in terms[-3:]:
-            print(f"    n={t['n']}: term={t['term_val']:.3e}, cum_pi={t['current_pi']:.16f}")
-        print()
+def Execute(Lambda, NTerms, Factorials):
+    """
+    Computes the pi approximation using the series:
+    π ≈ 4 + Σ [ (1/n!) * (1/(n+λ) - 4/(2n+1)) * (a_n)_n ]
+    where a_n = (2n+1)^2/(4(n+λ)) - n
+    """
+    total_sum = 0.0
     
-    return results
+    for n in range(1, NTerms + 1):
+        # Compute components
+        fact = Factorials[n - 1]  # 1/n!
+        first_term = 1 / (n + Lambda) - 4 / (2 * n + 1)
+        a_n = (2 * n + 1) ** 2 / (4 * (n + Lambda)) - n
+        
+        # Compute rising factorial directly
+        poch_val = RisingFactorial(a_n, n)
+        
+        # Compute term and accumulate
+        term = fact * first_term * poch_val
+        total_sum += term
+
+    PI_approx = 4.0 + total_sum
+    return PI_approx
 
 if __name__ == '__main__':
-    print("Convergence Test for π Approximation")
-    print("="*50)
-    results = verify_convergence()
+    # Test parameters
+    test_lambdas = [0.5, 1.0, 2.5, 10.0]
+    test_terms = [5, 10, 20, 30]
     
-    # Optimal parameter recommendation
-    best_lam = min(results, key=lambda x: results[x]['error'])
-    print(f"\nOptimal λ: {best_lam} (Error={results[best_lam]['error']:.2e})")
-    print(f"Use λ=0.5-1.0 with 15-20 terms for best results")
+    for lam in test_lambdas:
+        print(f"\nTesting λ = {lam}")
+        for n_terms in test_terms:
+            # Precompute factorials
+            fact_array = FactorialArray(n_terms)
+            
+            # Compute approximation
+            try:
+                pi_approx = Execute(lam, n_terms, fact_array)
+                error = abs(pi_approx - math.pi)
+                print(f"  N={n_terms}: Approx={pi_approx:.10f}, Error={error:.2e}")
+            except Exception as e:
+                print(f"  N={n_terms}: Failed ({str(e)})")
+
+    # Recommended parameters
+    print("\nRecommended parameters: λ=0.5-1.0 with N=20-30 terms")
