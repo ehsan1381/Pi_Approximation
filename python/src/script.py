@@ -100,7 +100,7 @@ def find_optimal_lambda(N, lambda_low=0.1, lambda_high=1.0, tol=1e-10):
                 break
     
     # Bisection algorithm
-    for _ in range(100):  # Max iterations
+    for _ in range(200):  # Max iterations
         lam_mid = (lambda_low + lambda_high) / 2
         f_mid = error_func(lam_mid)
         
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     for N in term_counts:
         lambda_opt, error = find_optimal_lambda(N)
         results[N] = (lambda_opt, error)
-        print(f"N={N}: Optimal λ={lambda_opt:.6f}, Error={error:.5e}")
+        print(f"N={N}: Optimal λ={lambda_opt:.12f}, Error={error:.10e}")
     
     # Plot results
     lambdas = [results[N][0] for N in term_counts]
