@@ -24,3 +24,11 @@ And lastly will modify the program to run in parallel.
 
 As I said this is mostly an exercise. I want to expand on it as much as I can.
 
+graph TD
+    A[Precompute] --> B[Stirling Numbers]
+    A --> C[1/n! Factorials]
+    B --> D[Pochhammer Polynomials]
+    C & D --> E[Term Calculation]
+    E --> F[Summation to π]
+    F --> G[Bisection Optimization]
+    G --> H[Optimal λ]

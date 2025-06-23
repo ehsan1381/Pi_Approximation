@@ -1,4 +1,5 @@
-# the first step is to write a working script
+# This script calculates the Pochhammer symbol and Stirling numbers of the first kind.
+#TODO the first step is to write a working script
 import numpy as np
 import os
 import math
@@ -7,12 +8,11 @@ from numpy.polynomial import Polynomial
 
 def OneOverFactorial(num):
     if num > 177:
-        print("Error : Input is too large to calculate 1/n!. It will cause
-        overflow")
+        print("Error : Input is too large to calculate 1/n!. It will cause overflow")
         os.exit()
 
     index = 1
-    product = 0
+    product = 1
 
     while index <= num :
         product = product / index
