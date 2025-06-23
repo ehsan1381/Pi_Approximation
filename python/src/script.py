@@ -75,7 +75,7 @@ def Execute(Lambda, NTerms, Factorials):
 
 if __name__ == '__main__':
     # Test parameters
-    test_lambdas = [0.5, 1.0, 2.5, 10.0]
+    test_lambdas = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
     test_terms = [5, 10, 20, 30]
     
     for lam in test_lambdas:
@@ -94,3 +94,77 @@ if __name__ == '__main__':
 
     # Recommended parameters
     print("\nRecommended parameters: λ=0.5-1.0 with N=20-30 terms")
+
+    
+def find_optimal_lambda(N, lambda_low=0.1, lambda_high=1.0, tol=1e-10):
+    """
+    Finds optimal λ using bisection method for fixed N
+    Returns: (optimal_lambda, error)
+    """
+    fact_array = FactorialArray(N)
+    
+    def error_func(lam):
+        approx = Execute(lam, N, fact_array)
+        return approx - math.pi
+    
+    # Ensure we have a root bracket
+    f_low = error_func(lambda_low)
+    f_high = error_func(lambda_high)
+    
+    if f_low * f_high > 0:
+        # Try to find a valid bracket automatically
+        test_points = np.linspace(0.1, 1.0, 20)
+        for i in range(len(test_points)-1):
+            f1 = error_func(test_points[i])
+            f2 = error_func(test_points[i+1])
+            if f1 * f2 < 0:
+                lambda_low, lambda_high = test_points[i], test_points[i+1]
+                break
+    
+    # Bisection algorithm
+    for _ in range(100):  # Max iterations
+        lam_mid = (lambda_low + lambda_high) / 2
+        f_mid = error_func(lam_mid)
+        
+        if abs(f_mid) < tol:
+            break
+            
+        if f_mid * error_func(lambda_low) < 0:
+            lambda_high = lam_mid
+        else:
+            lambda_low = lam_mid
+    
+    return lam_mid, abs(f_mid)
+
+# Test optimization for different term counts
+if __name__ == '__main__':
+    term_counts = [10, 20, 30, 50]
+    results = {}
+    
+    for N in term_counts:
+        lambda_opt, error = find_optimal_lambda(N)
+        results[N] = (lambda_opt, error)
+        print(f"N={N}: Optimal λ={lambda_opt:.6f}, Error={error:.5e}")
+    
+    # Plot results
+    lambdas = [results[N][0] for N in term_counts]
+    errors = [results[N][1] for N in term_counts]
+    
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(10, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.plot(term_counts, lambdas, 'o-')
+    plt.xlabel('Number of Terms (N)')
+    plt.ylabel('Optimal λ')
+    plt.title('Optimal λ vs Term Count')
+    
+    plt.subplot(1, 2, 2)
+    plt.semilogy(term_counts, errors, 's-')
+    plt.xlabel('Number of Terms (N)')
+    plt.ylabel('Error')
+    plt.title('Approximation Error at Optimal λ')
+    
+    plt.tight_layout()
+    plt.savefig('lambda_optimization.png')
+    plt.show()
