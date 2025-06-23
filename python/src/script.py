@@ -73,28 +73,6 @@ def Execute(Lambda, NTerms, Factorials):
     PI_approx = 4.0 + total_sum
     return PI_approx
 
-if __name__ == '__main__':
-    # Test parameters
-    test_lambdas = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-    test_terms = [5, 10, 20, 30]
-    
-    for lam in test_lambdas:
-        print(f"\nTesting λ = {lam}")
-        for n_terms in test_terms:
-            # Precompute factorials
-            fact_array = FactorialArray(n_terms)
-            
-            # Compute approximation
-            try:
-                pi_approx = Execute(lam, n_terms, fact_array)
-                error = abs(pi_approx - math.pi)
-                print(f"  N={n_terms}: Approx={pi_approx:.10f}, Error={error:.2e}")
-            except Exception as e:
-                print(f"  N={n_terms}: Failed ({str(e)})")
-
-    # Recommended parameters
-    print("\nRecommended parameters: λ=0.5-1.0 with N=20-30 terms")
-
     
 def find_optimal_lambda(N, lambda_low=0.1, lambda_high=1.0, tol=1e-10):
     """
@@ -138,7 +116,7 @@ def find_optimal_lambda(N, lambda_low=0.1, lambda_high=1.0, tol=1e-10):
 
 # Test optimization for different term counts
 if __name__ == '__main__':
-    term_counts = [10, 20, 30, 50]
+    term_counts = [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
     results = {}
     
     for N in term_counts:
