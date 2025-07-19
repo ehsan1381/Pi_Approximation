@@ -11,7 +11,7 @@ def OneOverFactorial(num):
     Calculates the value of 1 divided by the factorial of a given number.
     """
     if num > 170:  # Reduced from 177 for better numerical stability
-        print("Error: Input is too large to calculate 1/n! within float precision")
+        print("Error: Input is too large to calculae 1/n! within float precision")
         sys.exit()
 
     result = 1.0
