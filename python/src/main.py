@@ -1,53 +1,13 @@
-# This script calculates the Pochhammer symbol and Stirling numbers of the first kind.
-# It also computes the factorial of numbers and prepares polynomial arrays.
+# July 2025 , by Celestine_1729
+#
+# I forked this repo from a friend, 
+# It tries to calculate or more specificly, approximate the PI number , 
+# using one of the worst methods available, because the method is new,
+# and we want to see how far we can push it and then maybe , compare it online.
 
-import numpy as np
-import sys
-import math
-from functools import lru_cache
 
-def OneOverFactorial(num):
-    """
-    Calculates the value of 1 divided by the factorial of a given number.
-    """
-    if num > 170:  # Reduced from 177 for better numerical stability
-        print("Error: Input is too large to calculate 1/n! within float precision")
-        sys.exit()
 
-    result = 1.0
-    for i in range(1, num + 1):
-        result /= i
-    return result
 
-@lru_cache(maxsize=None)
-def StirlingNumberOfFirstKind(n, k):
-    """
-    Calculate the unsigned Stirling number of the first kind, c(n, k).
-    Uses memoization for efficiency.
-    """
-    if n == k:
-        return 1
-    if k == 0 or n == 0:
-        return 0
-    return (n - 1) * StirlingNumberOfFirstKind(n - 1, k) + StirlingNumberOfFirstKind(n - 1, k - 1)
-
-def RisingFactorial(x, n):
-    """
-    Directly computes the rising factorial (Pochhammer symbol) (x)_n
-    """
-    result = 1.0
-    for i in range(n):
-        result *= (x + i)
-    return result
-
-def FactorialArray(num):
-    """
-    Precomputes 1/n! for n=1 to num
-    """
-    arr = np.zeros(num)
-    for i in range(num):
-        arr[i] = OneOverFactorial(i + 1)
-    return arr
 
 def Execute(Lambda, NTerms, Factorials):
     """
@@ -128,7 +88,7 @@ if __name__ == '__main__':
     lambdas = [results[N][0] for N in term_counts]
     errors = [results[N][1] for N in term_counts]
     
-    import matplotlib.pyplot as plt
+    
     plt.figure(figsize=(10, 5))
     
     plt.subplot(1, 2, 1)
