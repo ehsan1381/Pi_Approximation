@@ -1,0 +1,4 @@
+.vscode/settings.json
+tests/__pycache__/test_functions.cpython-313-pytest-8.4.1.pyc
+.coverage
+python/src/__pycache__/functions.cpython-313.pyc

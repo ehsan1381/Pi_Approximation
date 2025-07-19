@@ -23,4 +23,3 @@ In the third step I will add ability to use 128bit floats in the C program
 And lastly will modify the program to run in parallel.
 
 As I said this is mostly an exercise. I want to expand on it as much as I can.
-
