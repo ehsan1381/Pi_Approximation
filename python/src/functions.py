@@ -5,7 +5,6 @@
 # with enough coverage rate .
 
 import numpy as np
-import matplotlib.pyplot as plt
 import sys
 import math
 from functools import lru_cache
@@ -84,10 +83,6 @@ def Execute(Lambda, NTerms, Factorials):
 
 
 
-
-
-
-    
 def find_optimal_lambda(N, lambda_low=0.1, lambda_high=1.0, tol=1e-10):
     """
     Finds optimal λ using bisection method for fixed N

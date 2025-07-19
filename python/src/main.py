@@ -5,7 +5,8 @@
 # using one of the worst methods available, because the method is new,
 # and we want to see how far we can push it and then maybe , compare it online.
 
-import funcs
+import functions
+import matplotlib.pyplot as plt
 
 
 # Test optimization for different term counts
@@ -14,9 +15,11 @@ if __name__ == '__main__':
     results = {}
     
     for N in term_counts:
-        lambda_opt, error = find_optimal_lambda(N)
+        lambda_opt, error = functions.find_optimal_lambda(N)
         results[N] = (lambda_opt, error)
         print(f"N={N}: Optimal λ={lambda_opt:.12f}, Error={error:.10e}")
+
+        
     
     # Plot results
     lambdas = [results[N][0] for N in term_counts]
