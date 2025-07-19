@@ -16,7 +16,7 @@ def OneOverFactorial(num):
     """
     if num > 170:  # Reduced from 177 for better numerical stability
         print("Error: Input is too large to calculate 1/n! within float precision")
-        sys.exit()
+        sys.exit('Invalid input file \n')
 
     result = 1.0
     for i in range(1, num + 1):
