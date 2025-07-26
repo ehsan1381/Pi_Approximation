@@ -20,6 +20,9 @@ modify it to make it a robust code. Optimize the algorithms wherever possible.~
 ~The second step is to translate that final code to C and again optimize for
 performance and precision.~
 
+note: the result for python and C is identical : Error=4.1007197638e-12
+
+
 In the third step I will add ability to use 128bit floats in the C program
 
 And lastly will modify the program to run in parallel.
