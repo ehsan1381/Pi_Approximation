@@ -1,3 +1,6 @@
+// July 2025 , by Celestine 
+// functions for computing PI, translated from python
+// the goal was better precision, but the results are identical 
 #include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>

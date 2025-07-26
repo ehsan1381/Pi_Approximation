@@ -1,3 +1,6 @@
+// July 2025 , by Celestine1729
+// header file for the C translation, the code approximates the PI
+// These funcs come from a reently found method for approximating PI
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 

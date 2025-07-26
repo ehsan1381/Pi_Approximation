@@ -1,3 +1,7 @@
+// July 2025 , by Celestine1729
+// This is a translation of the python code in the same project, I wrote this file 
+// looking for better approximation but the results are identical.
+
 #include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
