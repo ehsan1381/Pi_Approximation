@@ -12,11 +12,13 @@ practice problem both for programming and the theoretical side of things.
 
 
 # Roadmap
-First step is to prepare simple working version of the program in MATLAB. The
-modify it to make it a robust code. Optimize the algorithms wherever possible.
+~First step is to prepare simple working version of the program in MATLAB. The
+modify it to make it a robust code. Optimize the algorithms wherever possible.~
 
-The second step is to translate that final code to C and again optimize for
-performance and precision.
+~add python version~
+
+~The second step is to translate that final code to C and again optimize for
+performance and precision.~
 
 In the third step I will add ability to use 128bit floats in the C program
 
