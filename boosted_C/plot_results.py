@@ -1,85 +1,56 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import os
 
-def load_results(precision_mode):
-    """Load results based on precision mode"""
-    if precision_mode == 0:
-        dtype = [('terms', int), ('lambda', float), ('error', float), ('time', float)]
-    else:
-        # Use object dtype to handle long double strings
-        dtype = [('terms', int), ('lambda', object), ('error', object), ('time', float)]
-    
-    data = np.genfromtxt('results.txt', skip_header=1, dtype=dtype, delimiter='\t')
-    
-    # Convert long double strings if needed
-    if precision_mode == 1:
-        terms = data['terms']
-        lambdas = np.array([float(x) for x in data['lambda']])
-        errors = np.array([float(x) for x in data['error']])
-        times = data['time']
-        return terms, lambdas, errors, times
-    
-    return data['terms'], data['lambda'], data['error'], data['time']
+# Read data from file with high precision
+with open('lambda_optimization_data.txt', 'r') as f:
+    data_lines = f.readlines()
 
-def main():
-    precision_mode = 1  # 0 = double, 1 = long double
-    
-    try:
-        terms, lambdas, errors, times = load_results(precision_mode)
-    except Exception as e:
-        print(f"Error loading data: {e}")
-        return
-    
-    # Create plots
-    fig = plt.figure(figsize=(18, 12))
-    
-    # Plot 1: Lambda vs Terms
-    ax1 = fig.add_subplot(221)
-    ax1.plot(terms, lambdas, 'o-', markersize=6, linewidth=2)
-    ax1.set_xlabel('Number of Terms')
-    ax1.set_ylabel('Optimal Lambda')
-    ax1.set_title('Optimal Lambda vs Term Count')
-    ax1.grid(True, alpha=0.3)
-    
-    # Plot 2: Error vs Terms (log scale)
-    ax2 = fig.add_subplot(222)
-    ax2.semilogy(terms, errors, 's-', markersize=6, linewidth=2, color='red')
-    ax2.set_xlabel('Number of Terms')
-    ax2.set_ylabel('Approximation Error (log scale)')
-    ax2.set_title('Error vs Term Count')
-    ax2.grid(True, which='both', alpha=0.3)
-    
-    # Plot 3: Computation Time
-    ax3 = fig.add_subplot(223)
-    ax3.plot(terms, times, 'd-', markersize=6, linewidth=2, color='green')
-    ax3.set_xlabel('Number of Terms')
-    ax3.set_ylabel('Computation Time (ms)')
-    ax3.set_title('Computation Time vs Term Count')
-    ax3.grid(True, alpha=0.3)
-    
-    # Plot 4: 3D Visualization
-    ax4 = fig.add_subplot(224, projection='3d')
-    sc = ax4.scatter(terms, lambdas, np.log10(errors), c=times, cmap='viridis', s=100)
-    ax4.set_xlabel('Number of Terms')
-    ax4.set_ylabel('Optimal Lambda')
-    ax4.set_zlabel('log10(Error)')
-    ax4.set_title('Convergence Analysis')
-    fig.colorbar(sc, ax=ax4, label='Time (ms)')
-    
-    plt.suptitle(f"π Approximation Analysis ({'Long Double' if precision_mode else 'Double'} Precision)", 
-                 fontsize=16)
-    plt.tight_layout(rect=[0, 0, 1, 0.96])
-    plt.savefig('pi_analysis.png', dpi=200)
-    plt.show()
-    
-    # Print statistics
-    min_err_idx = np.argmin(errors)
-    max_term_idx = np.argmax(terms)
-    print("\n===== ANALYSIS SUMMARY =====")
-    print(f"Best precision: {errors[min_err_idx]:.3e} at {terms[min_err_idx]} terms")
-    print(f"Max terms computed: {terms[max_term_idx]}")
-    print(f"Average time: {np.mean(times):.2f} ms per computation")
+# Parse data manually for high precision
+term_counts = []
+lambdas = []
+errors = []
 
-if __name__ == "__main__":
-    main()
+for line in data_lines:
+    parts = line.split()
+    term_counts.append(int(parts[0]))
+    lambdas.append(float(parts[1]))
+    errors.append(float(parts[2]))
+
+term_counts = np.array(term_counts)
+lambdas = np.array(lambdas)
+errors = np.array(errors)
+
+# Create the plots
+plt.figure(figsize=(12, 6))
+
+# Plot 1: Optimal λ vs Term Count
+plt.subplot(1, 2, 1)
+plt.plot(term_counts, lambdas, 'o-', color='royalblue')
+plt.xlabel('Number of Terms (N)')
+plt.ylabel('Optimal λ')
+plt.title('Optimal λ vs Term Count (Quad Precision)')
+plt.grid(True, alpha=0.3)
+
+# Plot 2: Error vs Term Count (log scale)
+plt.subplot(1, 2, 2)
+plt.semilogy(term_counts, errors, 's-', color='crimson')
+plt.xlabel('Number of Terms (N)')
+plt.ylabel('Error (log scale)')
+plt.title('Quad-Precision Error at Optimal λ')
+plt.grid(True, which='both', alpha=0.3)
+
+# Add statistics
+min_err = np.min(errors)
+max_err = np.max(errors)
+min_n = term_counts[np.argmin(errors)]
+max_n = term_counts[np.argmax(errors)]
+
+plt.figtext(0.5, 0.01, 
+            f"Min error: {min_err:.5e} at N={min_n} | "
+            f"Max error: {max_err:.5e} at N={max_n}",
+            ha='center', fontsize=10, bbox=dict(facecolor='lightyellow', alpha=0.5))
+
+plt.tight_layout(rect=[0, 0.05, 1, 0.95])
+plt.savefig('lambda_optimization_analysis_quad.png', dpi=150)
+plt.show()

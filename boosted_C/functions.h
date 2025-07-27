@@ -1,38 +1,16 @@
+// July 2025 , by Celestine1729
+// header file for the C translation, the code approximates the PI
+// These funcs come from a reently found method for approximating PI
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include <math.h>
-#include <stdlib.h>
+#include <quadmath.h>
 
-// Define M_PI for portability
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-// Double precision functions
-double OneOverFactorial(int num);
-double RisingFactorial(double x, int n);
-double* FactorialArray(int num);
-double Execute(double Lambda, int NTerms, double* Factorials);
-void find_optimal_lambda(int N, double lambda_low, double lambda_high, 
-                         double tol, double* result);
-
-// Long double precision functions
-long double OneOverFactorialLD(int num);
-long double RisingFactorialLD(long double x, int n);
-long double* FactorialArrayLD(int num);
-long double ExecuteLD(long double Lambda, int NTerms, long double* Factorials);
-void find_optimal_lambdaLD(int N, long double lambda_low, 
-                          long double lambda_high, long double tol, 
-                          long double* result);
-
-// High-precision utilities
-typedef struct {
-    double value;
-    double error;
-} DoubleDouble;
-
-DoubleDouble dd_add(DoubleDouble a, DoubleDouble b);
-DoubleDouble dd_mul(DoubleDouble a, DoubleDouble b);
+__float128 OneOverFactorial(int num);
+__float128 RisingFactorial(__float128 x, int n);
+__float128* FactorialArray(int num);
+__float128 Execute(__float128 Lambda, int NTerms, __float128* Factorials);
+void find_optimal_lambda(int N, __float128 lambda_low, __float128 lambda_high, 
+                         __float128 tol, __float128* result);
 
 #endif
