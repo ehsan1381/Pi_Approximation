@@ -23,7 +23,9 @@ performance and precision.~
 note: the result for python and C is identical : Error=4.1007197638e-12
 
 
-In the third step I will add ability to use 128bit floats in the C program
+~In the third step I will add ability to use 128bit floats in the C program~
+
+note : the result for float 128 :Error=3.04296931213183264782844514928418516e-32
 
 And lastly will modify the program to run in parallel.
 
