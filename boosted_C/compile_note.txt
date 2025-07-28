@@ -1,0 +1,5 @@
+gcc -O3 -c functions.c -o functions.o -lquadmath
+gcc -O3 -c main.c -o main.o -lquadmath
+gcc -O3 -o main main.o functions.o -lquadmath
+./main
+python3 plotting.py
