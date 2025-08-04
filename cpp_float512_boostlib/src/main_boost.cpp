@@ -1,3 +1,11 @@
+// main_boost.cpp
+//August 2025 , by Clestine1729
+// contact: celestine1729@proton.me
+// This file is part of the Boost library for high precision calculations.
+// It tries to optimize the value of λ for high precision calculations for finding π.
+// It provides the main function to execute the optimization of λ for high precision calculations.
+
+
 #include "functions_boost.h"
 #include <iostream>
 #include <fstream>
@@ -31,13 +39,12 @@ int main() {
         int N = term_counts[i];
         mp_float result[2];
         find_optimal_lambda(N, 0.1, 1.0, 1e-100, result);
-        
-        // Format output with boost::format for better control
-        std::string output = boost::str(boost::format("N=%d: Optimal λ=%.50f, Error=%.10e") 
-                             % N % result[0] % result[1]);
-        
-        std::cout << output << std::endl;
-        fp << N << " " << result[0] << " " << result[1] << std::endl;
+
+        // Output using .str() for high precision
+        std::cout << "N=" << N
+                  << ": Optimal λ=" << result[0].str(50)
+                  << ", Error=" << result[1].str(10) << std::endl;
+        fp << N << " " << result[0].str(50) << " " << result[1].str(10) << std::endl;
     }
 
     fp.close();
