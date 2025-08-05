@@ -27,6 +27,9 @@ note: the result for python and C is identical : Error=4.1007197638e-12
 
 note : the result for float 128 :Error=3.04296931213183264782844514928418516e-32
 
+~Add float 512 , using cpp's boost lib~
+note : the result for float 512 :error= 2.81280e-102 at N=95
+
 And lastly will modify the program to run in parallel.
 
 As I said this is mostly an exercise. I want to expand on it as much as I can.

@@ -1,0 +1,1 @@
+g++ -O2 -std=c++17 main_boost.cpp functions_boost.cpp -o pi_boost
